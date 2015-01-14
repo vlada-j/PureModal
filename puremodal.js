@@ -48,13 +48,20 @@
 
 
 function PureModal(ele, options) {
-	var overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
+	var self = this;
+		overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
 		box = overlay.find('.pm-box'),
 		body = $('body'),
-		content = ele,
+		content = null,
 		bodyOverflow = '';
 
-	box.append(content);
-	bodyOverflow = body.css('overflow');
-	body.append(overlay).css('overflow', 'hidden');
+	$(ele).click(function(){self.open( $(this).attr('href')); return false;});
+
+	this.open=function(cont){
+		content = $(cont);
+		console.log(content);
+		box.append(content);
+		bodyOverflow = body.css('overflow');
+		body.append(overlay).css('overflow', 'hidden');
+	};
 }
