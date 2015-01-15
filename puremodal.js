@@ -11,24 +11,56 @@
 +function ($) {
 	"use strict";
 
-	function PureModal(ele, option){
-		var cont = $(ele),
-			panels = cont.children(),
-			headers = panels.children('.ac-header'),
-			contents = panels.children('.ac-content');
+	var PureModal=(function() {
+		var self = this,
+			overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
+			box = overlay.find('.pm-box'),
+			body = $('body'),
+			content = null,
+			bodyOverflow = '';
 
-		cont.addClass('accordion');
-		panels.addClass('ac-panel');
-		headers.click(function() {
-			panels.removeClass('open');
-			contents.css('height','');
-			var _he=$(this), _pa=_he.parent(), _co=_pa.children('.ac-content');
-			_pa.addClass('open');
-			_co.css('height', _co[0].scrollHeight+'px')
-		});
-	}
+		// Init
+		overlay.find('.pm-cell').bind('click', close);
+
+		function open(cont){
+			cont = cont || content;
+			content = cont;
+			box.append(content);
+			bodyOverflow = body.css('overflow');
+			body.append(overlay).css('overflow', 'hidden');
+		}
+		function close(){
+			overlay.detach();
+			body.css('overflow', bodyOverflow);
+		}
+
+		return {
+			open:open,
+			close:close,
+			getContent:function(){return content;}
+		}
+	})();
 
 	PureModal.DEFAULTS = {};
+	window.PureModal=PureModal;
+
+	function pmLink(ele) {
+		var self = this,
+			ele = $(ele),
+			content = null,
+			options = {};
+
+		// Init
+		content = ele.attr('data-pm-content') || ele.attr('href');
+		content = $(content).length > 0 ? $($(content)[0]) : null;
+		ele.click(function(){ return self.open();});
+
+		this.open=function(){
+			if(!content) {return true;}
+			PureModal.open(content);
+			return false;
+		};
+	}
 
 	$.fn.PureModal = function (option) {
 		return this.each(function () {
@@ -37,7 +69,7 @@
 				options	= $.extend({}, PureModal.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
 			if (!data) {
-				$this.data('PureModal', (data = new PureModal(this, options)));
+				$this.data('PureModal', (data = new pmLink(this, options)));
 			}
 		});
 	};
@@ -45,23 +77,3 @@
 	$.fn.PureModal.Constructor = PureModal;
 
 }(window.jQuery);
-
-
-function PureModal(ele, options) {
-	var self = this;
-		overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
-		box = overlay.find('.pm-box'),
-		body = $('body'),
-		content = null,
-		bodyOverflow = '';
-
-	$(ele).click(function(){self.open( $(this).attr('href')); return false;});
-
-	this.open=function(cont){
-		content = $(cont);
-		console.log(content);
-		box.append(content);
-		bodyOverflow = body.css('overflow');
-		body.append(overlay).css('overflow', 'hidden');
-	};
-}
