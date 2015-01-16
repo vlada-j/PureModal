@@ -29,9 +29,11 @@
 			bodyOverflow = body.css('overflow');
 			body.append(overlay).css('overflow', 'hidden');
 		}
-		function close(){
-			overlay.detach();
-			body.css('overflow', bodyOverflow);
+		function close(e){
+			if(box.has(e.target).length===0){
+				overlay.detach();
+				body.css('overflow', bodyOverflow);
+			}
 		}
 
 		return {
