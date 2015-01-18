@@ -23,8 +23,7 @@
 		overlay.find('.pm-cell').bind('click', close);
 
 		function open(cont){
-			cont = cont || content;
-			content = cont;
+			setContent(cont);
 			box.append(content);
 			bodyOverflow = body.css('overflow');
 			body.append(overlay).css('overflow', 'hidden');
@@ -43,11 +42,24 @@
 			box.css({width:w, height:h});
 			return self;
 		}
+		function setContent(cont){
+			cont = cont || content;
+			clear();
+			content = cont;
+			return self;
+		}
+		function clear(){
+			box.empty();
+			content = null;
+			return self;
+		}
 
 		return {
 			open:open,
 			close:close,
 			resize:resize,
+			setContent:setContent,
+			clear:clear,
 			getContent:function(){return content;}
 		}
 	})();
@@ -57,19 +69,30 @@
 
 	function pmLink(ele) {
 		var self = this,
-			ele = $(ele),
+			url = null,
 			content = null,
 			options = {};
 
 		// Init
-		content = ele.attr('data-pm-content') || ele.attr('href');
-		content = $(content).length > 0 ? $($(content)[0]) : null;
+		ele = $(ele);
+		options = ele.attr('data-puremodal');
+		content = ele.attr('data-pm-content');
+		url = ele.attr('data-pm-url');
+		$(content).length > 0 ? content = $($(content)[0]) : null;
 		ele.click(function(){ return self.open();});
-
+		ele.attr('href', 'javascript:false;');
 		this.open=function(){
-			if(!content) {return true;}
-			PureModal.open(content);
-			return false;
+			if(url) {
+				$.ajax(url)
+					.done(function(r){
+						content = r;
+						PureModal.open(content);
+					});
+				return false;}
+			if(content) {
+				PureModal.open(content);
+				return false;}
+			return true;
 		};
 	}
 
