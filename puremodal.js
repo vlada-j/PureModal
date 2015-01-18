@@ -35,10 +35,16 @@
 				body.css('overflow', bodyOverflow);
 			}
 		}
+		function resize(w, h){
+			w = typeof w === 'undefined' ? '' : w;
+			h = typeof h === 'undefined' ? '' : h;
+			box.css({width:w, height:h});
+		}
 
 		return {
 			open:open,
 			close:close,
+			resize:resize,
 			getContent:function(){return content;}
 		}
 	})();
