@@ -53,8 +53,16 @@
 			content = null;
 			return self;
 		}
+		function load(param){
+			$.ajax(url).done(function(r){
+				content = r;
+				open(content);
+			});
+			return self;
+		}
 
 		return {
+			load:load,
 			open:open,
 			close:close,
 			resize:resize,
@@ -83,11 +91,7 @@
 		ele.attr('href', 'javascript:false;');
 		this.open=function(){
 			if(url) {
-				$.ajax(url)
-					.done(function(r){
-						content = r;
-						PureModal.open(content);
-					});
+				PureModal.load(url);
 				return false;}
 			if(content) {
 				PureModal.open(content);
