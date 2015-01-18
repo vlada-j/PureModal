@@ -36,8 +36,8 @@
 			}
 		}
 		function resize(w, h){
-			w = typeof w === 'undefined' ? '' : w;
-			h = typeof h === 'undefined' ? '' : h;
+			w = typeof w === 'undefined' || w === null || w === false ? '' : w;
+			h = typeof h === 'undefined' || h === null || h === false ? '' : h;
 			box.css({width:w, height:h});
 		}
 
