@@ -54,7 +54,7 @@
 			return self;
 		}
 		function load(param){
-			$.ajax(url).done(function(r){
+			$.ajax(param).done(function(r){
 				content = r;
 				open(content);
 			});
@@ -91,7 +91,7 @@
 		ele.attr('href', 'javascript:false;');
 		this.open=function(){
 			if(url) {
-				PureModal.load(url);
+				PureModal.load({url:url});
 				return false;}
 			if(content) {
 				PureModal.open(content);
