@@ -13,6 +13,7 @@
 
 	var PureModal=(function() {
 		var self = this,
+			type = '',
 			overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
 			box = overlay.find('.pm-box'),
 			body = $('body'),
@@ -60,11 +61,16 @@
 			});
 			return self;
 		}
+		function gallery(collection){
+			
+			return self;
+		}
 
 		return {
 			load:load,
 			open:open,
 			close:close,
+			gallery:gallery,
 			resize:resize,
 			setContent:setContent,
 			clear:clear,
@@ -79,6 +85,7 @@
 		var self = this,
 			url = null,
 			content = null,
+			gallery = [],
 			options = {};
 
 		// Init
@@ -86,6 +93,7 @@
 		options = ele.attr('data-puremodal');
 		content = ele.attr('data-pm-content');
 		url = ele.attr('data-pm-url');
+		gallery = ele.attr('data-pm-gallery');
 		$(content).length > 0 ? content = $($(content)[0]) : null;
 		ele.click(function(){ return self.open();});
 		ele.attr('href', 'javascript:false;');
