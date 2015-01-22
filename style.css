@@ -25,3 +25,12 @@ body { overflow:hidden; }
     position:relative;
     display:inline-block;
     background-color:white;}
+.pm-arrow {
+	top:50%;
+	padding:10px;
+	font-size:30px;
+	cursor:pointer;
+	position:absolute;
+	background-color:white}
+.pm-arrow.previous {left:0}
+.pm-arrow.next {right:0}

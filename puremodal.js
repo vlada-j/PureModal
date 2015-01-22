@@ -17,6 +17,8 @@
 			overlay = $('<div class="pm-overlay"><div class="pm-table"><div class="pm-row"><div class="pm-cell"><div class="pm-box"/></div></div></div></div>'),
 			box = overlay.find('.pm-box'),
 			body = $('body'),
+			btnPre = $('<div class="pm-arrow previous">◄</div>'),
+			btnNex = $('<div class="pm-arrow next">►</div>'),
 			content = null,
 			bodyOverflow = '',
 			collection = [],
@@ -24,6 +26,9 @@
 
 		// Init
 		overlay.find('.pm-cell').bind('click', close);
+		btnPre.hide().bind('click', previous);
+		btnNex.hide().bind('click', next);
+		overlay.append(btnPre, btnNex);
 
 		function open(cont){
 			setContent(cont);
@@ -34,6 +39,8 @@
 		function close(e){
 			if(box.has(e.target).length===0){
 				overlay.detach();
+				btnPre.hide();
+				btnNex.hide();
 				body.css('overflow', bodyOverflow);
 			}
 			return self;
@@ -67,6 +74,8 @@
 			collection = collect;
 			current = index || current;
 			open(collection[current]);
+			btnPre.show();
+			btnNex.show();
 			return self;
 		}
 		function next(){
