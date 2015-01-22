@@ -122,6 +122,11 @@
 			if(content) {
 				PureModal.open(content);
 				return false;}
+			if(gallery==='') {
+				var col=[];
+				ele.children('a').each(function(){col.push('<img src="'+this.href+'">');});
+				PureModal.gallery(col);
+				return false;}
 			return true;
 		};
 	}
