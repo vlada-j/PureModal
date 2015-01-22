@@ -18,14 +18,15 @@
 			box = overlay.find('.pm-box'),
 			body = $('body'),
 			content = null,
-			bodyOverflow = '';
+			bodyOverflow = '',
+			collection = [],
+			current = 0;
 
 		// Init
 		overlay.find('.pm-cell').bind('click', close);
 
 		function open(cont){
 			setContent(cont);
-			box.append(content);
 			bodyOverflow = body.css('overflow');
 			body.append(overlay).css('overflow', 'hidden');
 			return self;
@@ -47,6 +48,7 @@
 			cont = cont || content;
 			clear();
 			content = cont;
+			box.append(content);
 			return self;
 		}
 		function clear(){
@@ -61,8 +63,22 @@
 			});
 			return self;
 		}
-		function gallery(collection){
-			
+		function gallery(collect, index){
+			collection = collect;
+			current = index || current;
+			open(collection[current]);
+			return self;
+		}
+		function next(){
+			current+=1;
+			current = current===collection.length?0:current;
+			setContent(collection[current]);
+			return self;
+		}
+		function previous(){
+			current-=1;
+			current = current<0?collection.length-1:current;
+			setContent(collection[current]);
 			return self;
 		}
 
@@ -71,6 +87,8 @@
 			open:open,
 			close:close,
 			gallery:gallery,
+			previous:previous,
+			next:next,
 			resize:resize,
 			setContent:setContent,
 			clear:clear,
