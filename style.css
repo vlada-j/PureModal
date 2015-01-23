@@ -30,7 +30,7 @@ body { overflow:hidden; }
 	padding:10px;
 	font-size:30px;
 	cursor:pointer;
-	position:absolute;
+	position:fixed;
 	background-color:white}
-.pm-arrow.previous {left:0}
-.pm-arrow.next {right:0}
+.pm-arrow.previous {left:20px}
+.pm-arrow.next {right:20px}
