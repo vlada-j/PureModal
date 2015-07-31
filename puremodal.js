@@ -144,7 +144,7 @@
 		return this.each(function () {
 			var $this	= $(this),
 				data	= $this.data('PureModal'),
-				options	= $.extend({}, PureModal.DEFAULTS, $this.data(), typeof option == 'object' && option)
+				options	= $.extend({}, PureModal.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
 			if (!data) {
 				$this.data('PureModal', (data = new pmLink(this, options)));
