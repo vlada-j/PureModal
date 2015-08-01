@@ -30,6 +30,7 @@
 		btnNex.hide().bind('click', next);
 		overlay.append(btnPre, btnNex);
 
+
 		function open(cont){
 			setContent(cont);
 			bodyOverflow = body.css('overflow');
@@ -91,6 +92,8 @@
 			return self;
 		}
 
+
+
 		return {
 			load:load,
 			open:open,
@@ -105,8 +108,11 @@
 		}
 	})();
 
+
+
 	PureModal.DEFAULTS = {};
 	window.PureModal=PureModal;
+
 
 	function pmLink(ele) {
 		var self = this,
@@ -139,6 +145,8 @@
 			return true;
 		};
 	}
+
+
 
 	$.fn.PureModal = function (option) {
 		return this.each(function () {
